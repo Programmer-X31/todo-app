@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap");
+
+* {
+	font-family: Nunito;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: #354868;
+}
+
+#title {
+	color: #fccbb4;
+}
+
+#todoAdd {
+	width: 50vw;
+	display: flex;
+	justify-content: space-between;
+}
+
+#todoAdd #todoAdd__input {
+	width: 83%;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 35px;
+	outline: none;
+	box-shadow: none;
+}
+
+#todoAdd #todoAdd__submit {
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	width: 10%;
+	border: none;
+	border-radius: 35px;
+	background-color: #f88d8d;
+}
+
+.todoList__listItem {
+	background-color: #fff;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	min-width: 30vw;
+	max-width: 30vw;
+	padding: 12px 17px;
+	margin: 20px;
+	border-radius: 5px;
+}
+
+.todoList__listItem .todoList__listItem__text {
+	min-width: 70%;
+	max-width: 70%;
+	overflow-wrap: break-word;
+}
+
+.todoList__listItem .todoList__listItem__removeHandle {
+	background-color: #ff6868;
+	width: 7%;
+	font-size: 17px;
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 2px;
+}
