@@ -1,7 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 * {
-	font-family: Nunito;
+	font-family: 'Inter', sans-serif;
+	--background: #282a36;
+	--input: #44475a;
+	--foreground: #f8f8f2;
+	--comment: #6272a4;
+	--cyan: #8be9fd;
+	--green: #50fa7b;
+	--orange: #ffb86c;
+	--pink: #ff79c6;
+	--purple: #bd93f9;
+	--red: #ff5555;
+	--yellow: #f1fa8c;
 }
 
 body {
@@ -9,43 +19,33 @@ body {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	background-color: #354868;
+	color: var(--foreground);
+	background-color: var(--background);
 }
 
 #title {
-	color: #fccbb4;
-}
-
-#todoAdd {
-	width: 50vw;
-	display: flex;
-	justify-content: space-between;
+	font-size: 32pt;
+	font-weight: 900;
 }
 
 #todoAdd #todoAdd__input {
-	width: 83%;
+	width: 50vw;
+	background-color: var(--foreground);
+	margin-right: auto;
+	margin-left: auto;
 	padding: 10px 15px;
 	border: none;
-	border-radius: 35px;
+	border-radius: 10px;
 	outline: none;
 	box-shadow: none;
 }
 
-#todoAdd #todoAdd__submit {
-	color: white;
-	font-size: 15px;
-	font-weight: bold;
-	width: 10%;
-	border: none;
-	border-radius: 35px;
-	background-color: #f88d8d;
-}
-
 .todoList__listItem {
-	background-color: #fff;
+	background-color: var(--input);
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	align-items: center;
 	min-width: 30vw;
 	max-width: 30vw;
 	padding: 12px 17px;
@@ -60,11 +60,32 @@ body {
 }
 
 .todoList__listItem .todoList__listItem__removeHandle {
-	background-color: #ff6868;
+	background-color: var(--red);
 	width: 7%;
-	font-size: 17px;
-	color: white;
+	font-size: 18pt;
+	color: var(--foreground);
 	outline: none;
 	border: none;
 	border-radius: 2px;
+}
+
+.todoList__listItem .todoList__listItem__handle {
+	font-size: 19pt;
+	cursor: grabbing;
+	color: var(--pink);
+}
+
+.todoList__listItem .todoList__listItem__checkbox {
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	cursor: pointer;
+	height: 20px;
+}
+
+.todoList__greeting {
+	font-size: 20pt;
+	font-weight: 600;
+	color: var(--purple);
+	margin: 50px;
 }
