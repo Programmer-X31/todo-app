@@ -6,7 +6,7 @@ const todoInput = document.getElementById('todoAdd__input');
 const todoList = document.getElementById('todoList');
 
 new Sortable(todoList, {
-	animation: 100,
+	animation: 200,
 	handle: '.todoList__listItem__handle',
 	onEnd: function(/**Event*/ evt) {
 		const oldTodo = todos[evt.oldIndex];
@@ -17,15 +17,17 @@ new Sortable(todoList, {
 	},
 });
 
-function removeDuplicates(string, char) {
-	return Array.from(new Set(string.split(char))).toString();
-}
-
-function createElement(content, done) {
+function createListElement({ content, done, priority }) {
 	// Full list element is a div
 	let listItem = document.createElement('div');
 	listItem.className = 'todoList__listItem';
-
+	switch (priority) {
+		case 1:
+		case 2:
+		case 3:
+			listItem.classList.add(`imp_${priority}`);
+			break;
+	}
 	// Todo Text
 	let todoText = document.createElement('div');
 	todoText.textContent = content;
@@ -41,10 +43,7 @@ function createElement(content, done) {
 			checkbox.parentNode,
 		);
 
-		todos[index] = {
-			content, // Same Content
-			done: checkbox.checked,
-		};
+		todos[index]['done'] = checkbox.checked;
 		if (checkbox.checked) {
 			todoText.style.textDecoration = 'line-through';
 		} else {
@@ -58,6 +57,33 @@ function createElement(content, done) {
 		todoText.style.textDecoration = 'line-through';
 	}
 
+	let imp_1 = document.createElement('div');
+	imp_1.className = 'todoList__listItem__priority';
+	imp_1.textContent = '1';
+	imp_1.onclick = function() {
+		const index = Array.from(imp_1.parentNode.parentNode.children).indexOf(imp_1.parentNode);
+		imp_1.parentNode.classList.replace(`imp_${todos[index]['priority']}`, 'imp_1');
+		todos[index]['priority'] = 1;
+		localStorage.setItem('todos', JSON.stringify(todos));
+	};
+	let imp_2 = document.createElement('div');
+	imp_2.className = 'todoList__listItem__priority';
+	imp_2.textContent = '2';
+	imp_2.onclick = function() {
+		const index = Array.from(imp_2.parentNode.parentNode.children).indexOf(imp_2.parentNode);
+		imp_1.parentNode.classList.replace(`imp_${todos[index]['priority']}`, 'imp_2');
+		todos[index]['priority'] = 2;
+		localStorage.setItem('todos', JSON.stringify(todos));
+	};
+	let imp_3 = document.createElement('div');
+	imp_3.className = 'todoList__listItem__priority';
+	imp_3.textContent = '3';
+	imp_3.onclick = function() {
+		const index = Array.from(imp_3.parentNode.parentNode.children).indexOf(imp_3.parentNode);
+		imp_1.parentNode.classList.replace(`imp_${todos[index]['priority']}`, 'imp_3');
+		todos[index]['priority'] = 3;
+		localStorage.setItem('todos', JSON.stringify(todos));
+	};
 	// Handle used for moving
 	let handle = document.createElement('div');
 	let handle_icon = document.createElement('i');
@@ -68,7 +94,7 @@ function createElement(content, done) {
 	// Remove Button
 	let removeButton = document.createElement('button');
 	removeButton.textContent = '-';
-	removeButton.className = 'todoList__listItem__removeHandle';
+	removeButton.className = 'todoList__listItem__remove';
 	removeButton.onclick = function() {
 		const index = Array.from(checkbox.parentNode.parentNode.children).indexOf(
 			checkbox.parentNode,
@@ -81,6 +107,9 @@ function createElement(content, done) {
 	// Adding to the main element
 	listItem.appendChild(checkbox);
 	listItem.appendChild(todoText);
+	listItem.appendChild(imp_1);
+	listItem.appendChild(imp_2);
+	listItem.appendChild(imp_3);
 	listItem.appendChild(removeButton);
 	listItem.appendChild(handle);
 
@@ -91,7 +120,7 @@ function update(tasksList) {
 	todoList.innerHTML = ''; // Remove all existing children from todoList
 	if (tasksList.length > 0) {
 		for (let i = 0; i < tasksList.length; i++) {
-			createElement(tasksList[i].content, tasksList[i].done);
+			createListElement(tasksList[i]);
 		}
 	} else {
 		let greeting = document.createElement('div');
@@ -115,12 +144,13 @@ todoForm.onsubmit = e => {
 	e.preventDefault();
 	const val = todoInput.value;
 	todoInput.value = '';
-	if (removeDuplicates(val, ' ') != '') {
+	if (val.trim() != '') {
 		if (todos.length == 0) {
 			todoList.innerHTML = '';
 		}
-		todos.push({ content: val, done: false });
+		const todo = { content: val, done: false, priority: 3 };
+		todos.push(todo);
 		localStorage.setItem('todos', JSON.stringify(todos));
-		createElement(val, false);
+		createListElement(todo);
 	}
 };
